@@ -1,35 +1,30 @@
 #include "main.h"
+
 /**
- * cap_string - capitalize all words of string
- * Return: void
- * @s: string
+ *  * _strcat - this fuction will concatenates two strings
+ *   * @dest: the string that will modified.
+ *    * @src: the string that ill be concatenated to @des.
+ *     *
+ *      * Return: a pointer to @dest
  */
-char *cap_string(char *s)
+char *_strcat(char *dest, char *src)
 {
-	int i = 0, j = 0;
+	int index_01 = 0;
+	int index_02 = 0;
 
-	char seps[] = {32, 10, 9, 44, 59, 46, 33, 63, 34, 40, 41, 123, 125};
-
-	int size = sizeof(seps) / sizeof(seps[0]);
-
-	while (s[i] != 0)
+	while (dest[index_01] != '\0')
 	{
-		char c = s[i];
-
-		for (j = 0; j < size; j++)
-		{
-			if (c == seps[j] && s[i + 1] >= 'a' && s[i + 1] <= 'z')
-			{
-				s[i + 1] = 'A' + (s[i + 1] - 'a');
-				break;
-			}
-		}
-		i++;
+		index_01++;
 	}
 
-	if (s[0] >= 'a' && s[0] <= 'z')
-		s[0] = 'A' + (s[0] - 'a');
+	while (src[index_02] != '\0')
+	{
+		dest[index_01 + index_02] = src[index_02];
+		index_02++;
 
-	return (s);
+	}
+	dest[index_01 + index_02] = '\0';
 
+	return (dest);
 }
+
