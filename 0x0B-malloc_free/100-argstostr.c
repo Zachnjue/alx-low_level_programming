@@ -1,74 +1,52 @@
 #include "main.h"
 #include <stdlib.h>
-/**
- * * wordCounterRec - count num of words recursively
- * * @str: pointer to char
- * * @i: current index
- * * Return: number of words
- */
-int wordCounterRec(char *str, int i)
-{
-	if (str[i] == '\0')
-		return (0);
-	if (str[i] == ' ' && str[i + 1] != ' ' && str[i + 1] != '\0')
-		return (1 + wordCounterRec(str, i + 1));
-	return (wordCounterRec(str, i + 1));
-}
-/**
- * * word_counter - counts number of words in 1d array of strings
- * * @str: pointer to char
- * * Return: number of words
- */
-int word_counter(char *str)
-{
-	if (str[0] != ' ')
-		return (1 + wordCounterRec(str, 0));
-	return (wordCounterRec(str, 0));
-}
-/**
- * * strtow - splits a string into words.
- * * @str: string to be splitted
- * * Return: pointer to an array of strings (words) or null
- */
-char **strtow(char *str)
-{
-	char **strDup;
-	int i, n, m, words;
 
-	if (str == NULL || str[0] == 0)
+/**
+ *  * argstostr - concatenates all the arguments of a program.
+ *   * @ac: argument count.
+ *    * @av: argument vector.
+ *     *
+ *      * Return: pointer of an array of char
+ */
+char *argstostr(int ac, char **av)
+{
+	char *aout;
+	int c, i, j, ia;
+
+	if (ac == 0)
 		return (NULL);
-	words = word_counter(str);
-	if (words < 1)
-		return (NULL);
-	strDup = malloc(sizeof(char *) * (words + 1));
-	if (strDup == NULL)
-		return (NULL);
-	i = 0;
-	while (i < words && *str != '\0')
+
+	for (c = i = 0; i < ac; i++)
 	{
-		if (*str != ' ')
-		{
-			n = 0;
-			while (str[n] != ' ')
-				n++;
-			strDup[i] = malloc(sizeof(char) * (n + 1));
+		if (av[i] == NULL)
+			return (NULL);
 
-			if (strDup[i] == NULL)
-			{
-				while (--i >= 0)
-					free(strDup[--i]);
-				free(strDup);
-				return (NULL);
-			}
-			m = 0;
-			while (m < n)
-			{																						strDup[i][m] = *str;
-				m++, str++;
-			}
-			strDup[i][m] = '\0';
-			i++;																				}
-		str++;
+		for (j = 0; av[i][j] != '\0'; j++)
+			c++;
+		c++;
 	}
-	strDup[i] = '\0';
-	return (strDup);
+
+	aout = malloc((c + 1) * sizeof(char));
+
+	if (aout == NULL)
+	{
+		free(aout);
+		return (NULL);
+	}
+
+	for (i = j = ia = 0; ia < c; j++, ia++)
+	{
+		if (av[i][j] == '\0')
+		{
+			aout[ia] = '\n';
+			i++;
+			ia++;
+			j = 0;
+		}
+		if (ia < c - 1)
+			aout[ia] = av[i][j];
+	}
+	aout[ia] = '\0';
+
+return (aout);
 }
